@@ -14,5 +14,6 @@ public class Enonce {
 		indexStart=Integer.parseInt(read.segment(4));
 		
 		
+		
 	}
 }
