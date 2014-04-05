@@ -9,7 +9,7 @@ public class TikaiRun {
 		System.out.println(j.getY());
 		Street str=enonce.streetList.get(2);
 		System.out.println(str.getIndexA());
-		System.out.println(str.getIndexB());
+		System.out.println(str.getLength());
 	}
 
 }

@@ -30,8 +30,8 @@ public class Enonce {
 			read.readLine();
 			streetList.add(
 					new Street(Integer.parseInt(read.segment(0)),
-							Integer.parseInt(read.segment(2)),
-							(Integer.parseInt(read.segment(1))==2),
+							Integer.parseInt(read.segment(1)),
+							(Integer.parseInt(read.segment(2))==2),
 							Integer.parseInt(read.segment(3)),
 							Integer.parseInt(read.segment(4))
 							)
