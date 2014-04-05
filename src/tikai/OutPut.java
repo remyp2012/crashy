@@ -12,14 +12,19 @@ public class OutPut {
 	public int moveCar(int indexCar,Street str)
 	{
 		CarHistory car=this.carsHist.get(indexCar);
-		if(!str.goAble(enonce.juncList.get(car.h.get(car.h.size()-1))))//street.goAble(car.currentJunction)
+		if(!str.goAble(enonce.juncList.get(car.currentIndex())))//street.goAble(car.currentJunction)
 		{
-			Junction deb=enonce.juncList.get(car.h.get(car.h.size()-1));
+			Junction deb=enonce.juncList.get(car.currentIndex());
 			throw new Error("bad street");
 		}
 		if(car.timeElapsed+str.getTimeCost()<=nbT)
 		{
-			car.h.add(str.getIndexB());
+			car.timeElapsed+=str.getTimeCost();
+			if(car.currentIndex()==str.getIndexB())
+				car.h.add(str.getIndexA());
+			else
+				car.h.add(str.getIndexB());
+			str.addVisited();
 			return 0;}
 		else return 1;
 	}
@@ -50,11 +55,12 @@ public class OutPut {
 		}
 	}
 	public void algoTikai() {
+		Street.mode=2;
 		int timeUp=0;
 		while(timeUp<carsHist.size())
 		{
 			for(int i=0;i<carsHist.size();++i)
-				timeUp+=moveCar(i, carsHist.get(i).currentJunction(enonce).nextBest());
+				timeUp+=moveCar(i, carsHist.get(i).currentJunction(enonce).nextBest2());
 
 		}
 	}

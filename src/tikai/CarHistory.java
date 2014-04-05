@@ -17,4 +17,7 @@ public class CarHistory {
 	public String toString() {
 		return ""+id+h.toString();
 	}
+	public int currentIndex() {
+		return h.get(h.size()-1);
+	}
 }

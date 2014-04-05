@@ -1,6 +1,7 @@
 package tikai;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Junction {
 	private double x,y;
@@ -39,6 +40,10 @@ public class Junction {
 	public Street nextBest() {
 		int tempP=pointer;
 		pointer=(pointer+1)%outwardStreets.size();
-		return outwardStreets.get(tempP);
+		return outwardStreets.get(outwardStreets.size()-tempP-1);
+	}
+	public Street nextBest2() {
+		Collections.sort(outwardStreets);
+		return outwardStreets.get(outwardStreets.size()-1);
 	}
 }

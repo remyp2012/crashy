@@ -1,15 +1,29 @@
 package tikai;
 
 public class Street implements Comparable<Street>{
+	public static int mode = 0;
 	private int indexA,indexB;
 	private Junction A,B;
 	private boolean biDirection;
 	private int timeCost;
 	private int length;
+	private int timesVisited=0;
+	public void addVisited()
+	{
+		timesVisited++;
+	}
+	private int streetScore1()
+	{
+		return length*1000/timeCost;
+	}
+	private int streetScore2()
+	{
+		return timesVisited*-300+length*10/timeCost;
+	}
 
 	@Override
 	public String toString() {
-		return ""+indexA+((biDirection)?"<":"")+"->"+indexB+":t="+timeCost+",l="+length;
+		return ""+indexA+((biDirection)?"<":"")+"->"+indexB+":v="+length/timeCost+",.="+timesVisited;
 	}
 	public Street(int indexA, int indexB, boolean biDirection, int timeCost,
 			int length,Enonce e) {
@@ -57,13 +71,18 @@ public class Street implements Comparable<Street>{
 	@Override
 	public int compareTo(Street o) {
 		int myspeed,his;
-		if((myspeed=length*1000/timeCost)>(his=o.length*1000/o.timeCost))
+		if((myspeed=streetScore())>(his=o.streetScore()))
 			return 1;
 		else if(myspeed==his)
 			return 0;
 		else return -1;
 	}
 
+	private int streetScore() {
+		if(mode==1)
+		return streetScore1();
+		else return streetScore2();
+	}
 	public Junction getA(Enonce e) {
 		return e.juncList.get(indexA);
 	}
