@@ -6,14 +6,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class OutPut {
+	public int nbT;
 	public final ArrayList<CarHistory> carsHist=new ArrayList<CarHistory>();
-	public void moveCar(int indexCar,int newJunctionIndex)
+	private Enonce enonce;
+	public void moveCar(int indexCar,Street str)
 	{
-		this.carsHist.get(indexCar).h.add(newJunctionIndex);
+		CarHistory tempch=this.carsHist.get(indexCar);
+		if(enonce.juncList.get(tempch.h.get(tempch.h.size()-1))!=str.getA(enonce))
+			throw new Error("bad street");
+		if(tempch.timeElapsed+str.getTimeCost()<=nbT)
+			tempch.h.add(str.getIndexB());
 	}
-	public OutPut(int nbCar,int indSource) {
-		for(int i=0; i<nbCar;++i)
-			carsHist.add(new CarHistory(indSource));
+	public OutPut(Enonce e) {
+		this.enonce=e;
+		this.nbT=e.nbT;
+		for(int i=0; i<e.nbCar;++i)
+			carsHist.add(new CarHistory(e.indexStart));
 	}
 	public void outPutToFile(String path)
 	{

@@ -1,7 +1,11 @@
 package tikai;
 
+import java.util.ArrayList;
+
 public class Junction {
 	private double x,y;
+
+	public final ArrayList<Street> outwardStreets=new ArrayList<Street>();
 
 	public double getX() {
 		return x;

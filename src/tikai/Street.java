@@ -1,6 +1,6 @@
 package tikai;
 
-public class Street {
+public class Street implements Comparable<Street>{
 	private int indexA,indexB;
 	private boolean biDirection;
 	private int timeCost;
@@ -45,5 +45,22 @@ public class Street {
 	}
 	public void setLength(int length) {
 		this.length = length;
+	}
+
+	@Override
+	public int compareTo(Street o) {
+		int myspeed,his;
+		if((myspeed=length*1000/timeCost)>(his=o.length*1000/o.timeCost))
+			return 1;
+		else if(myspeed==his)
+			return 0;
+		else return -1;
+	}
+
+	public Junction getA(Enonce e) {
+		return e.juncList.get(indexA);
+	}
+	public Junction getB(Enonce e) {
+		return e.juncList.get(indexB);
 	}
 }

@@ -3,6 +3,7 @@ package tikai;
 import iotools.ReadTool;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Enonce {
 	public final int nbJunc, nbStr,nbT,nbCar,indexStart;
@@ -28,7 +29,8 @@ public class Enonce {
 		for(int i=0;i<nbStr;++i)
 		{
 			read.readLine();
-			streetList.add(
+			Street tempStr;
+			streetList.add(tempStr=
 					new Street(Integer.parseInt(read.segment(0)),
 							Integer.parseInt(read.segment(1)),
 							(Integer.parseInt(read.segment(2))==2),
@@ -36,6 +38,13 @@ public class Enonce {
 							Integer.parseInt(read.segment(4))
 							)
 					);
+			
+			tempStr.getA(this).outwardStreets.add(tempStr);
+			if(tempStr.isBiDirection())tempStr.getB(this).outwardStreets.add(tempStr);
+		}
+		for(int i=0;i<nbJunc;++i)
+		{
+			Collections.sort(juncList.get(i).outwardStreets);
 		}
 
 	}
