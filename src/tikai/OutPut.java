@@ -5,8 +5,16 @@ import iotools.WriteTool;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class outPut {
+public class OutPut {
 	public final ArrayList<CarHistory> carsHist=new ArrayList<CarHistory>();
+	public void moveCar(int indexCar,int newJunctionIndex)
+	{
+		this.carsHist.get(indexCar).h.add(newJunctionIndex);
+	}
+	public OutPut(int nbCar,int indSource) {
+		for(int i=0; i<nbCar;++i)
+			carsHist.add(new CarHistory(indSource));
+	}
 	public void outPutToFile(String path)
 	{
 		WriteTool wr=new WriteTool(path);
@@ -22,6 +30,7 @@ public class outPut {
 					wr.w.write(""+carsHist.get(i).h.get(j)+'\n');
 				}
 			}
+			wr.w.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
