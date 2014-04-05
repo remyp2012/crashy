@@ -35,7 +35,7 @@ public class Enonce {
 							Integer.parseInt(read.segment(1)),
 							(Integer.parseInt(read.segment(2))==2),
 							Integer.parseInt(read.segment(3)),
-							Integer.parseInt(read.segment(4))
+							Integer.parseInt(read.segment(4)),this
 							)
 					);
 			

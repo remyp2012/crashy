@@ -9,13 +9,19 @@ public class OutPut {
 	public int nbT;
 	public final ArrayList<CarHistory> carsHist=new ArrayList<CarHistory>();
 	private Enonce enonce;
-	public void moveCar(int indexCar,Street str)
+	public int moveCar(int indexCar,Street str)
 	{
-		CarHistory tempch=this.carsHist.get(indexCar);
-		if(enonce.juncList.get(tempch.h.get(tempch.h.size()-1))!=str.getA(enonce))
+		CarHistory car=this.carsHist.get(indexCar);
+		if(!str.goAble(enonce.juncList.get(car.h.get(car.h.size()-1))))//street.goAble(car.currentJunction)
+		{
+			Junction deb=enonce.juncList.get(car.h.get(car.h.size()-1));
 			throw new Error("bad street");
-		if(tempch.timeElapsed+str.getTimeCost()<=nbT)
-			tempch.h.add(str.getIndexB());
+		}
+		if(car.timeElapsed+str.getTimeCost()<=nbT)
+		{
+			car.h.add(str.getIndexB());
+			return 0;}
+		else return 1;
 	}
 	public OutPut(Enonce e) {
 		this.enonce=e;
@@ -41,6 +47,15 @@ public class OutPut {
 			wr.w.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	public void algoTikai() {
+		int timeUp=0;
+		while(timeUp<carsHist.size())
+		{
+			for(int i=0;i<carsHist.size();++i)
+				timeUp+=moveCar(i, carsHist.get(i).currentJunction(enonce).nextBest());
+
 		}
 	}
 }

@@ -2,20 +2,27 @@ package tikai;
 
 public class Street implements Comparable<Street>{
 	private int indexA,indexB;
+	private Junction A,B;
 	private boolean biDirection;
 	private int timeCost;
 	private int length;
-	
+
+	@Override
+	public String toString() {
+		return ""+indexA+((biDirection)?"<":"")+"->"+indexB+":t="+timeCost+",l="+length;
+	}
 	public Street(int indexA, int indexB, boolean biDirection, int timeCost,
-			int length) {
+			int length,Enonce e) {
 		super();
 		this.indexA = indexA;
 		this.indexB = indexB;
+		A=e.juncList.get(indexA);
+		B=e.juncList.get(indexB);
 		this.biDirection = biDirection;
 		this.timeCost = timeCost;
 		this.length = length;
 	}
-	
+
 	public int getIndexA() {
 		return indexA;
 	}
@@ -62,5 +69,15 @@ public class Street implements Comparable<Street>{
 	}
 	public Junction getB(Enonce e) {
 		return e.juncList.get(indexB);
+	}
+	public boolean goAble(Junction junction) {
+		boolean result;
+		if(biDirection)
+			result=junction == A ||junction==B;
+		else
+			result=junction == A;
+		if(!result)
+			throw new Error("bad street");
+		return result;
 	}
 }
