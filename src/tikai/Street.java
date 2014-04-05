@@ -18,7 +18,7 @@ public class Street implements Comparable<Street>{
 	}
 	private int streetScore2()
 	{
-		return timesVisited*-300+length*10/timeCost;
+		return timesVisited*-+length*10/timeCost;
 	}
 
 	@Override

@@ -32,7 +32,11 @@ public class OutPut {
 		this.enonce=e;
 		this.nbT=e.nbT;
 		for(int i=0; i<e.nbCar;++i)
-			carsHist.add(new CarHistory(e.indexStart));
+		{
+			CarHistory temp=new CarHistory(e);
+			carsHist.add(temp);
+			temp.setDirection(Math.cos(2*Math.PI*i/e.nbCar),Math.sin(2*Math.PI*i/e.nbCar));
+		}
 	}
 	public void outPutToFile(String path)
 	{
@@ -60,7 +64,7 @@ public class OutPut {
 		while(timeUp<carsHist.size())
 		{
 			for(int i=0;i<carsHist.size();++i)
-				timeUp+=moveCar(i, carsHist.get(i).currentJunction(enonce).nextBest2());
+				timeUp+=moveCar(i, carsHist.get(i).currentJunction().nextBest2());
 
 		}
 	}
