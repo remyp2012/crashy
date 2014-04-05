@@ -1,6 +1,7 @@
 package tikai;
 
 public class Street implements Comparable<Street>{
+	public Enonce e;
 	public static double rapportTrajCurrentCar = 0;
 	public boolean fromA = true;
 	public static int currentDirection = 0;
@@ -41,6 +42,25 @@ public class Street implements Comparable<Street>{
 	}
 	private double streetScore3(int direction,boolean AtoB,double rapportTrajet)//rapport between 0 and 1
 	{
+		double cos,sin;
+		cos=0;
+		sin=0;
+		if(direction==0||direction==1||direction==2)
+		{
+			cos=-1;sin=0;
+		}
+		
+		double cosStr=0,sinStr=0;
+
+		cosStr=B.getX()-A.getX();
+		sinStr=B.getY()-A.getY();
+		double norm=norme(cosStr, sinStr);
+		cosStr/=norm;
+		sinStr/=norm;
+		return timesVisited*-90000+length*10/timeCost+((AtoB)?1:-1)*dot(cosStr, sinStr, cos, sin)*3000*((rapportTrajet<0.00001)?1:0);
+	}
+	private double streetScore4(int direction,boolean AtoB,double rapportTrajet)//rapport between 0 and 1
+	{
 		double cos=Math.cos(direction*2*Math.PI/8);
 		double sin=Math.sin(direction*2*Math.PI/8);
 		double cosStr=0,sinStr=0;
@@ -75,6 +95,7 @@ public class Street implements Comparable<Street>{
 		this.biDirection = biDirection;
 		this.timeCost = timeCost;
 		this.length = length;
+		this.e=e;
 	}
 
 	public int getIndexA() {
