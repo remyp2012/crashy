@@ -11,7 +11,7 @@ public class Junction {
 	public String toString() {
 		return ""+id;
 	}
-
+	public static Junction sortingJunction;
 	public final ArrayList<Street> outwardStreets=new ArrayList<Street>();
 	int pointer=0;
 
@@ -36,13 +36,21 @@ public class Junction {
 		this.x = x;
 		this.y = y;
 	}
-
-	public Street nextBest() {
+	public Street nextBest(int i) {
+		if(Street.mode==1)
+			return nextBest1();
+		else if(Street.mode==2)
+			return nextBest2();
+		else
+			return nextBest2();
+	}
+	public Street nextBest1() {
 		int tempP=pointer;
 		pointer=(pointer+1)%outwardStreets.size();
 		return outwardStreets.get(outwardStreets.size()-tempP-1);
 	}
 	public Street nextBest2() {
+		sortingJunction=this;
 		Collections.sort(outwardStreets);
 		return outwardStreets.get(outwardStreets.size()-1);
 	}

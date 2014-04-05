@@ -25,7 +25,7 @@ public class CarHistory {
 	}
 	private double preferredX,preferredY;
 	public void setDirection(double cos, double sin) {
-		// TODO Auto-generated method stub
-		
+		preferredX=cos;
+		preferredY=sin;
 	}
 }

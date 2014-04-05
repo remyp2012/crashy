@@ -1,6 +1,9 @@
 package tikai;
 
 public class Street implements Comparable<Street>{
+	public static double rapportTrajCurrentCar = 0;
+	public boolean fromA = true;
+	public static int currentDirection = 0;
 	public static int mode = 0;
 	private int indexA,indexB;
 	private Junction A,B;
@@ -18,7 +21,44 @@ public class Street implements Comparable<Street>{
 	}
 	private int streetScore2()
 	{
-		return timesVisited*-+length*10/timeCost;
+		return timesVisited*-3000+length*10/timeCost;
+	}
+	public static double attraction(double t, int car){
+		double att=0;
+		if(t<0.1)
+			att=10;
+		else att=1/t;
+		if(car==3||car==4||car==5)
+			return att/10*100;
+		return att/10;
+	}
+	public double attraction2(double t, int car){
+		double att=0;
+		if(t<0.05)
+			att=50;
+		else att=1/t;
+		return att/50;
+	}
+	private double streetScore3(int direction,boolean AtoB,double rapportTrajet)//rapport between 0 and 1
+	{
+		double cos=Math.cos(direction*2*Math.PI/8);
+		double sin=Math.sin(direction*2*Math.PI/8);
+		double cosStr=0,sinStr=0;
+
+		cosStr=B.getX()-A.getX();
+		sinStr=B.getY()-A.getY();
+		double norm=norme(cosStr, sinStr);
+		cosStr/=norm;
+		sinStr/=norm;
+		return timesVisited*-900+length*10/timeCost+((AtoB)?1:-1)*dot(cosStr, sinStr, cos, sin)*attraction2(rapportTrajet,direction)*300;
+	}
+	public static double dot(double x, double y, double x1, double y1)
+	{
+		return x*x1+y*y1;
+	}
+	public static double norme(double x, double y)
+	{
+		return Math.sqrt(x*x+y*y);
 	}
 
 	@Override
@@ -70,7 +110,7 @@ public class Street implements Comparable<Street>{
 
 	@Override
 	public int compareTo(Street o) {
-		int myspeed,his;
+		double myspeed,his;
 		if((myspeed=streetScore())>(his=o.streetScore()))
 			return 1;
 		else if(myspeed==his)
@@ -78,10 +118,16 @@ public class Street implements Comparable<Street>{
 		else return -1;
 	}
 
-	private int streetScore() {
+	private double streetScore() {
 		if(mode==1)
-		return streetScore1();
-		else return streetScore2();
+			return streetScore1();
+		else if(mode==2)
+			return streetScore2();
+		else
+		{
+			fromA=Junction.sortingJunction==A;
+			return streetScore3(currentDirection, Junction.sortingJunction==A, rapportTrajCurrentCar);
+		}
 	}
 	public Junction getA(Enonce e) {
 		return e.juncList.get(indexA);
